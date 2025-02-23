@@ -6,16 +6,12 @@ const TaskList = () => {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        // fetchTasks()
-        //     .then((data) => {
-        //         console.log("Fetched Tasks:", data);  
-        //         setTasks(data);
-        //     })
-        //     .catch((error) => console.error("Error fetching tasks:", error));
-    
-        xxx()
-            .then((response) => console.log("Response from xxx:", response)) // Log response from xxx
-            .catch((error) => console.error("Error in xxx:", error));
+        fetchTasks()
+            .then((data) => {
+                console.log("Fetched Tasks:", data);  
+                setTasks(data);
+            })
+            .catch((error) => console.error("Error fetching tasks:", error));
     }, []);
 
     const handleTaskAdded = async () => {
