@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchTasks, xxx } from "../services/api";
+import { fetchTasks } from "../services/tasks";
 import AddTask from "./AddTask"; 
 
 const TaskList = () => {
@@ -21,8 +21,8 @@ const TaskList = () => {
     
 
     return (
-        <div>
-            <AddTask onTaskAdded={handleTaskAdded} />
+        <div className="bg-dark text-light">
+                <AddTask onTaskAdded={handleTaskAdded} />
             <ul>
                 {tasks.map((task) => (
                     <li key={task.id}>{task.title}</li>

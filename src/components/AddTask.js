@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addTask } from "../services/api";
+import { addTask } from "../services/tasks";
 
 const AddTask = ({ onTaskAdded }) => {
     const [title, setTitle] = useState("");
@@ -14,7 +14,7 @@ const AddTask = ({ onTaskAdded }) => {
     
         try {
             const response = await addTask(title);
-            onTaskAdded(response.task);  // Now correctly passes the task object
+            onTaskAdded(response.task);  
             setTitle("");  
         } catch (error) {
             alert(error.message);
@@ -27,11 +27,12 @@ const AddTask = ({ onTaskAdded }) => {
             <input
                 type="text"
                 placeholder="Enter Task"
+                className="mt-5 h-32 ms-4 me-2"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
             />
-            <button type="submit">Add Task</button>
+            <button type="submit" className="btn btn-warning">Add Task</button>
         </form>
     );
 };

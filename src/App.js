@@ -1,13 +1,28 @@
 import React from "react";
-import TaskList from "./components/TaskList";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from './pages/homepage'
+import Tasks from './pages/tasks'
+import "bootstrap/dist/css/bootstrap.min.css";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 const App = () => {
+    // return (
+    //     <div className = 'bg-dark w-full'>
+    //         <Homepage />
+    //     </div>
     return (
-        <div>
-            <h1>To-Do List</h1>
-            <TaskList />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route index element={<Home />} />
+                    <Route path="/tasks" element={<Tasks/>}/>
+            </Routes>
+        </BrowserRouter>
     );
+      
 };
 
 export default App;
+
+
