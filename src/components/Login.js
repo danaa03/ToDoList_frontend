@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from "react";
 import "../styles/login.css";
-import { checkUser } from "../services/userauth";
+import { login } from "../services/userauth";
+import { useNavigate } from "react-router-dom";
 
-
-const Login = (props) => {
+const Login = ({toggleForm}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -14,15 +15,6 @@ const Login = (props) => {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     }
-
-    useEffect(() => {
-            // fetchTasks()
-            //     .then((data) => {
-            //         console.log("Fetched Tasks:", data);  
-            //         setTasks(data);
-            //     })
-            //     .catch((error) => console.error("Error fetching tasks:", error));
-        }, []);
 
     const handleLogin = async (e) => {
             e.preventDefault();
@@ -37,28 +29,24 @@ const Login = (props) => {
             }
 
             try {
-                const response = await checkUser(email, password);
+                const response = await login(email, password);
+                alert("Logged in successfully");
+                setEmail("");
+                setPassword("");
+                navigate("/tasks");
             } catch (error) {
+                console.error("Login error:", error);
                 alert(error.message);
             }
-
-        
-            // try {
-            //     const response = await addTask(title);
-            //     onTaskAdded(response.task);  
-            //     setTitle("");  
-            // } catch (error) {
-            //     alert(error.message);
-            // }
         };
         
 
     return (
         <div className="d-flex justify-content-center align-items-center vh-100 bg-dark text-light">
             <form className="login_bg text-dark p-4 rounded w-25" onSubmit={handleLogin}>
-                <h3 className="text-center text-light">Login</h3>
+                <h3 className="text-center text-light mb-2">Login</h3>
 
-                <div className="form-floating mb-3">
+                <div className="form-floating mb-3 mt-2">
                     <input type="email" className="form-control" id="floatingInput" placeholder="Email" value={email}
                         onChange={handleEmailChange} />
                     <label htmlFor="floatingInput">Email address</label>
@@ -71,6 +59,13 @@ const Login = (props) => {
                 </div>
 
                 <button className="btn btn-warning w-100" type = "submit">Login</button>
+
+                <p className="mt-2 text-center text-light">
+                    Don't have an account?  
+                    <a href="#" className="text-warning ms-2" onClick={(e) => { e.preventDefault(); toggleForm(); }}>
+                        Sign up here
+                    </a>
+                </p>
             </form>
         </div>
     );

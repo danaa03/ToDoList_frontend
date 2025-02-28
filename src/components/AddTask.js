@@ -32,7 +32,7 @@ const AddTask = ({ onTaskAdded }) => {
                 onChange={(e) => setTitle(e.target.value)}
                 required
             />
-            <button type="submit" className="btn btn-warning">Add Task</button>
+            <button type="submit" className="ms-1 btn btn-warning">Add Task</button>
         </form>
     );
 };

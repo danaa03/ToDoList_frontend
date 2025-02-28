@@ -2,21 +2,22 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/homepage'
 import Tasks from './pages/tasks'
-import "bootstrap/dist/css/bootstrap.min.css";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import "bootstrap/dist/css/bootstrap.min.css";      
+import { Navigate } from "react-router";
+
+function PrivateRoutes({children})
+{
+    const token = localStorage.getItem("token");
+    return token ? children : <Navigate to = "/"/>
+}
 
 const App = () => {
-    // return (
-    //     <div className = 'bg-dark w-full'>
-    //         <Homepage />
-    //     </div>
+    
     return (
         <BrowserRouter>
             <Routes>
                     <Route path="/" element={<Home/>}/>
-                    <Route index element={<Home />} />
-                    <Route path="/tasks" element={<Tasks/>}/>
+                    <Route path="/tasks" element={<PrivateRoutes><Tasks /></PrivateRoutes>} />
             </Routes>
         </BrowserRouter>
     );

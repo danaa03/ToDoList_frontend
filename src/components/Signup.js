@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from "react";
 import "../styles/login.css";
 import {addUser} from "../services/userauth";
-import bcrypt from "bcryptjs-react";
 
-const Signup = () => {
+const Signup = ({toggleForm}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -15,18 +14,15 @@ const Signup = () => {
             return
         }
 
-        const hashedPassword = bcrypt.hashSync(password, 10)
         try {
-            const response = await addUser(email, hashedPassword)
-        } catch (e)
-        {
-            alert(e.message)
-            return;
+            await addUser(email, password);
+            alert("User added successfully");
+            setEmail("");
+            setConfirmPassword("");
+            setPassword("");
+        } catch (error) {
+            alert(error.message); 
         }
-        alert("User added successfully")
-        setEmail("")
-        setConfirmPassword("")
-        setPassword("")
         return;
     }
 
@@ -58,11 +54,17 @@ const Signup = () => {
                 </div>
 
                 <div className="form-floating mb-3">
-                    <input type="password" className="form-control" id="floatingPassword" placeholder="Confirm Password" value = {confirmPassword} onChange={handleConfirmPasswordChange} />
+                    <input type="password" className="form-control" id="floatingCPassword" placeholder="Confirm Password" value = {confirmPassword} onChange={handleConfirmPasswordChange} />
                     <label htmlFor="floatingPassword">Confirm Password</label>
                 </div>
 
                 <button className="btn btn-warning w-100" type = "submit">Signup</button>
+                <p className="mt-2 text-center text-light">
+                    Already have an account?  
+                    <a href="#" className="text-warning ms-2" onClick={(e) => { e.preventDefault(); toggleForm(); }}>
+                        Login here
+                    </a>
+                </p>
             </form>
         </div>
     );
