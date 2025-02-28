@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import { fetchTasks } from "../services/tasks";
 import AddTask from "./AddTask"; 
-import { getProtectedTasks } from "../services/tasks";
+import { deleteTask, getProtectedTasks } from "../services/tasks";
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
@@ -20,6 +19,12 @@ const TaskList = () => {
         setTasks(updatedTasks);
     };
 
+    const handleTaskDeleted = async (title) => {
+        const updatedTasks = await deleteTask(title);
+        setTasks(updatedTasks);
+        window.location.reload()
+    };
+
     return (
         <div className="bg-dark text-light">
                 <AddTask onTaskAdded={handleTaskAdded} />
@@ -29,7 +34,10 @@ const TaskList = () => {
                 ) :
               
                 (tasks.map((task) => (
-                    <li key={task.id}>{task.title}</li>
+                    <div key={task.id} className="d-flex flex-row mt-2">
+                        <li className="me-2">{task.title}</li>
+                        <button className="btn btn-sm btn-danger" onClick={()=>handleTaskDeleted(task.title)}>Delete</button>
+                    </div>
                 )))}
             </ul>
         </div>

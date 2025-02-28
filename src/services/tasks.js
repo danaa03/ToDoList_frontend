@@ -15,6 +15,24 @@ export const addTask = async (title) => {
     }
 };
 
+export const deleteTask = async (title) => {
+    console.log("Deleting task:", title);
+    try {
+        const response = await fetch("http://localhost:5000/tasks/delete-task", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({ title })
+        });
+        return response.json();
+    } catch (error) {
+        console.error("Error deleting task:", error);
+        throw(error);
+    }
+};
+
 export const getProtectedTasks = async () => {
     try {
         const response = await fetch("http://localhost:5000/tasks/", {
